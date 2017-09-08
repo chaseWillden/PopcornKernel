@@ -9,6 +9,7 @@ CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
 LDFLAGS = -T $(BOOTLOADER)/linker.ld -melf_i386
 AS = nasm
 ASFLAGS = -f elf
+QEMU=/c/Program Files/qemu/qemu-system-i386.exe
 
 all: kernel.elf
 
@@ -40,7 +41,7 @@ popcorn.iso: kernel.elf
 	$(AS) $(ASFLAGS) $< -o $@
 
 run:
-	VBoxManage startvm "Test"
+	qemu-system-i386 -boot d -cdrom popcorn.iso -m 512
 
 clean:
 	rm -rf kernel.elf popcorn.iso
